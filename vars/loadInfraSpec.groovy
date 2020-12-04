@@ -4,12 +4,11 @@ def call(Map config=[:]) {
     def INFRA_SPEC_BRANCH       = 'main'
     def CONFIG_FILE_NAME        = 'config.yml'
 
-    dir (INFRA_SPEC_SUBDIR) {
-        git branch: INFRA_SPEC_BRANCH,
-            credentialsId: INFRA_SPEC_CREDENTIAL,
-            url: INFRA_SPEC_URL
-
-        yamlObj = readYaml file: CONFIG_FILE_NAME
-    }
-    return yamlObj
+    return loadGitYaml(
+                        branch: INFRA_SPEC_BRANCH,
+                        url: INFRA_SPEC_URL,
+                        credentialsId: INFRA_SPEC_CREDENTIAL,
+                        file: CONFIG_FILE_NAME,
+                        subdir: INFRA_SPEC_SUBDIR
+                    )
 }
